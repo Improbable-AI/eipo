@@ -1,43 +1,7 @@
 
 ## Overview
 
-This is a collection of curiosity algorithms implemented in pytorch on top of the [rlpyt](https://github.com/astooke/rlpyt) deep rl codebase. 
-
-### Available Curiosity Algorithms
-
-|Algo|Type|Functional|
-
-Algo | Type | Functional
-:------------ | :-------------| :-------------
-ICM | Prediction error, Controllability |  ✅
-Disagreement | Prediction error | ✅
-RND | Count based | ✅
-NDIGO | Prediction error, Learning progress | ❌
-#Exploration | Count based | ❌
-VIME | Learning progress | ❌
-Empowerment | Controllability | ❌
-CTS | Count | ❌
-Bootstrap DQN | Uncertainty | ❌
-
-### Available Learning Algorithms
-
-Algo | Type | Functional
-:------------ | :-------------| :-------------
-PPO |  Policy Gradient | ✅
-A2C |  Policy Gradient | ✅
-DQN |  Deep Q-Learning | ✅
-Double DQN | Deep Q-Learning | ✅
-Dueling DQN | Deep Q-Learning | ✅
-R2D2 | Deep Q-Learning | ✅
-DDPG | Q-Function Policy Gradient | ✅
-TD3 | Q-Function Policy Gradient | ✅
-SAC | Q-Function Policy Gradient | ✅
-
-### Available Environments
-* Standard gym environments (mujoco, etc.)
-* Atari environments
-* SuperMarioBros
-* Deepmind PyColab
+This official codebase for ["Redeeming Intrinsic Rewards via Constrained Optimization"](https://williamd4112.github.io/pubs/neurips22_eipo.pdf) (NeurIPS'22).
 
 ### Usage
 
@@ -62,20 +26,14 @@ make clean # clean all subdirectories of pycache files etc.
 
 6.  Before running anything, make sure you create an empty directory titled "results" in the base directory.
 
-7.  Run the launch file from the command line, substituting in your preferences for the correct arguments (see rlpyt/utils/launching/arguments.py for a complete list).
+7.  Run experiment via the following command
 ```
-python3 launch.py -env breakout -alg ppo -curiosity_alg icm -lstm
+python experiments/diff_adapt_minmax/run.py --mode local --gpus 0
 ```
-
-8.  This will launch your experiment in a tmux session titled "experiment". This session will have 3 windows - a window where your code is running, an htop monitoring process, and a window that serves tensorboard to port 12345 (or the port specified in global.json). 
-
-9.  Results folders will be automatically generated in the results directory created in the directory created in step 6.
-
-10.  Example runs can be found in the models directory. Model weights and exact hyperparameters can be found there for tested environments.
 
 ## Notes
 
-For more information on the original rlpyt codebase, please see this [white paper on Arxiv](https://arxiv.org/abs/1909.01500).  If you use this repository in your work or otherwise wish to cite it, please reference the rlpyt white paper.
+Our codebase is based on [curiosity_baselines](https://github.com/echen9898/curiosity_baselines) and [rlpyt](https://github.com/astooke/rlpyt) For more information on the original rlpyt codebase, please see this [white paper on Arxiv](https://arxiv.org/abs/1909.01500).
 
 ### Code Organization
 
@@ -107,7 +65,6 @@ Parts of the following open source codebases were used to make this codebase pos
 * [stable-baselines](https://github.com/hill-a/stable-baselines)
 
 Thanks to [Prof. Pulkit Agrawal](https://people.csail.mit.edu/pulkitag/) and the members of the [Improbable AI lab](https://people.csail.mit.edu/pulkitag/) at MIT CSAIL for their continued guidance and support.
-
 
 
 
