@@ -1,0 +1,45 @@
+version: 0
+verbose: false
+mounts: # mount configurations Available keys: NOW, UUID,
+  - !mounts.SSHCode &code_mount
+    local_path: .
+    # host_path: $JYNMNT/latent-planning/latent-planning
+    local_tar: /tmp/{now:%Y-%m-%d}/{now:%H%M%S.%f}-jaynes-demo.tar
+    host_path: "{env.JYNS_DIR}/jaynes-demo/{now:%Y-%m-%d}/{now:%H%M%S.%f}-jaynes_demo"
+    remote_tar: "{env.JYNS_DIR}/jaynes-demo/{now:%Y-%m-%d}/{now:%H%M%S.%f}-jaynes_demo.tar"
+    pypath: true
+    excludes: >-
+      --exclude='data' --exclude='samples' --exclude='images' --exclude='videos'
+      --exclude='figures' --exclude='results' --exclude='analysis' --exclude='*.ipynb'
+      --exclude='*__pycache__' --exclude='*.git' --exclude='*.png' --exclude='*.gif'
+      --exclude='*.mp4' --exclude='*.idea' --exclude='*.egg-info' --exclude='*.pkl'
+      --exclude='*.log*'
+    compress: true
+runners:
+  - !runners.Simple &ssh_runner
+    name: "jaynes-docker-demo-{now:%H%M%S}-{RUN.count}"
+    setup: |
+      source $HOME/.bashrc.bk
+      conda activate curiosity
+      wandb login <<< aad6b0de9d7c055a3286f0a2712ec65a19ac4fbe
+      echo running inside `hostname`
+    envs: >-
+      LANG=utf-8
+      LC_CTYPE=en_US.UTF-8
+      LD_LIBRARY_PATH=$HOME/.mujoco/mujoco200/bin:$LD_LIBREARY_PATH
+      PYTHONPATH=$(pwd):$PYTHONPATH
+      PYTHONPATH=`which python`:$PYTHONPATH
+    pypath: "{mounts[0].host_path}"
+    work_dir: "{mounts[0].host_path}"
+modes: # todo: add support to modes.
+  visiongpu50: &default
+    mounts:
+      - *code_mount
+    runner: *ssh_runner
+    launch: !ENV
+      type: ssh
+      ip: "visiongpu50"
+      username: "{env.JYNS_USERNAME}"
+      password: "{env.JYNS_PASSWORD}"
+      launch_dir: "{env.JYNS_DIR}/jaynes-demo/{now:%Y-%m-%d}/{now:%H%M%S.%f}"
+run: *default
