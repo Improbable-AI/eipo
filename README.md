@@ -1,7 +1,8 @@
 
+
 ## Overview
 
-This official codebase for ["Redeeming Intrinsic Rewards via Constrained Optimization"](https://williamd4112.github.io/pubs/neurips22_eipo.pdf) (NeurIPS'22).
+This official codebase for ["Redeeming Intrinsic Rewards via Constrained Optimization"](https://williamd4112.github.io/pubs/neurips22_eipo.pdf) (NeurIPS'22). **Cleaner implementation in ClearnRL is available here: https://github.com/williamd4112/cleanrl/blob/master/cleanrl/eipo_rnd_envpool.py**
 
 ### Usage
 
